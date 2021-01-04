@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="javascripts/jquery-3.5.1.js"></script>
+  </head>
+  <body>
+    <h1>Express</h1>
+    <p>Welcome to our test</p>
+    <div id="wrapper"><!-- USER INFO-->
+	<div id="userInfo"></div>
+		<h2>User Info</h2>
+		<p><strong>Name:
+<span id='userInfoName'></span></strong><br><strong>Age:
+<span id='userInfoAge'></span></strong><br><strong>Gender:
+<span id='userInfoGender'></span></strong><br><strong>Location:
+<span id='userInfoLocation'></span></strong></p>
+	</div><!-- /USER INFO-->
+    <!-- WRAPPER -->
+    <div id="wrapper">
+      <!-- USER LIST -->
+      <h2 id="userList">User List</h2>
+      <div id="userList">
+        <table>
+          <thead>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Delete?</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <!-- /USER LIST -->
+    </div>
+    <!-- ADD USER-->
+	<h2 style="margin-left: 320px;">Add User</h2>
+	<div id="addUser">
+		<fieldset>
+			<input id="inputUserName" type="text" placeholder="Username"><input id="inputUserEmail" type="text" placeholder="Email"><br><input id="inputUserFullname" type="text" placeholder="Full Name"><input id="inputUserAge" type="text" placeholder="Age"><br><input id="inputUserLocation" type="text" placeholder="Location"><input id="inputUserGender" type="text" placeholder="gender"><br><button id="AddUser">Add User</button>
+		</fieldset>
+	</div><!-- /ADD USER-->
+    <!-- /WRAPPER -->
+    <h2 style="margin-left: 320px;">Update User</h2>
+	<div id="updateUser">
+		<fieldset>
+			<input id="inputUserEmail" type="text" placeholder="Email"><br><br><button id="UpdateUser">Update Email</button>
+		</fieldset>
+	</div><!-- /ADD USER-->
+  </body>
+  <script src="/javascripts/global.js"></script>
+</html>
