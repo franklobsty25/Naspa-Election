@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Naspa Election</title>
+  </head>
+  <body>
+  
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block">
+                  <div class="mb-4">
+                  <h3>Vice Presidential Position</h3>
+                  <p class="mb-4"></p>
+                </div>
+                  
+                  <div class="col-md-12">
+                    <p id="vprez" style="display: none;"></p>
+                    <p id="vprezName" style="display: none;"></p>
+                    <img src="images/alberto.png"/>
+                  </div><br/>
+
+                  <button class="btn text-white btn-block btn-primary" onclick="VPresidentVoteCount()">Vote</button>
+
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script>
+          // Vice Presidential loading and voting process
+    window.onload = function LoadCandidates() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var vprezArr = JSON.parse(this.responseText);
+          document.getElementById("vprez").innerHTML = vprezArr[0]._id;
+        }
+      };
+      xhttp.open("GET", "/votes/", true);
+      xhttp.send();
+    }
+
+    function VPresidentVoteCount() {
+      var vprez = document.getElementById("vprez").innerHTML;
+  
+      var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var vprezObj = JSON.parse(this.responseText);
+            document.getElementById("vprezName").innerHTML = vprezObj.vice_presidential_votes;
+            window.location.href = "/secretary.html";
+          }
+        };
+        xhttp.open("PUT", "/votes/vice_presidential/" + vprez, true);
+        xhttp.send();
+      }
+  </script>
+  
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

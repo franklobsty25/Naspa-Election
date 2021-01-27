@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Naspa Election</title>
+  </head>
+  <body onload="LoadVotes(); PercentagesVotes();">
+  
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+            <h1>Naspa Election Results</h1><br>
+            <div class="row justify-content-center">
+              <div class="col-md-12">
+                <div class="row">
+                <div class="col-md-6">
+                  <h2>Candidates</h2>
+                    <p id="president" style="color: red;"></p>
+                    <p id="Vpresident" style="color: red;"></p>
+                    <p id="secretary" style="color: red;"></p>
+                    <p id="financial_secretary" style="color: red;"></p>
+                    <p id="organiser" style="color: red;"></p>
+                    <p id="wocom" style="color: red;"></p>
+                </div>
+                <div class="col-md-4">
+                  <h2>Votes</h2>
+                  <p id="presidentVotes" style="color: red;"></p>
+                  <p id="VpresidentVotes" style="color: red;"></p>
+                  <p id="secretaryVotes" style="color: red;"></p>
+                  <p id="financialSecretaryVotes" style="color: red;"></p>
+                  <p id="organiserVotes" style="color: red;"></p>
+                  <p id="wocomVotes" style="color: red;"></p>
+                </div>
+                <div class="col-md-2">
+                    <h2>Percentages</h2>
+                    <p id="presidentPercentage" style="color: blue;"></p>
+                    <p id="VpresidentPercentage" style="color: blue;"></p>
+                    <p id="secretaryPercentage" style="color: blue;"></p>
+                    <p id="financialSecretaryPercentage" style="color: blue;"></p>
+                    <p id="organiserPercentage" style="color: blue;"></p>
+                    <p id="wocomPercentage" style="color: blue;"></p>
+                </div>
+                </div><!-- row end -->
+                </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div><a href="#" onclick="Print()">Click To Print Election Results</a>
+  </div>
+  <script>
+      window.addEventListener("load", LoadExecutives);
+
+      function LoadExecutives() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  var candidateArr = JSON.parse(this.responseText);
+                  document.getElementById("president").innerHTML = candidateArr[0].president;
+                  document.getElementById("Vpresident").innerHTML = candidateArr[0].vice_president;
+                  document.getElementById("secretary").innerHTML = candidateArr[0].secretary;
+                  document.getElementById("financial_secretary").innerHTML = candidateArr[0].financial_secretary;
+                  document.getElementById("organiser").innerHTML = candidateArr[0].organiser;
+                  document.getElementById("wocom").innerHTML = candidateArr[0].wocom;
+              }
+          };
+          xhttp.open("GET", "/executives/", true);
+          xhttp.send();
+      }
+
+
+      function LoadVotes() {
+          var xhttp = new XMLHttpRequest();
+          var prez, Vprez, sec, fSec, org, wocom;
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var votesArr = JSON.parse(this.responseText);
+                document.getElementById("presidentVotes").innerHTML = votesArr[0].presidential_votes;
+                document.getElementById("VpresidentVotes").innerHTML = votesArr[0].vice_presidential_votes;
+                document.getElementById("secretaryVotes").innerHTML = votesArr[0].secretary_votes;
+                document.getElementById("financialSecretaryVotes").innerHTML = votesArr[0].financial_secretary_votes;
+                document.getElementById("organiserVotes").innerHTML = votesArr[0].organiser_votes;
+                document.getElementById("wocomVotes").innerHTML = votesArr[0].wocom_votes;
+
+                prez = votesArr[0].presidential_votes;
+                Vprez = votesArr[0].vice_presidential_votes;
+                sec = votesArr[0].secretary_votes;
+                fSec = votesArr[0].financial_secretary_votes;
+                org = votesArr[0].organiser_votes;
+                wocom = votesArr[0].wocom_votes;
+
+                PercentagesVotes(prez, Vprez, sec, fSec, org, wocom);
+
+            }
+          };
+          xhttp.open("GET", "/votes/", true);
+          xhttp.send();
+      }
+
+      function PercentagesVotes(prez, Vprez, sec, fSec, org, wocom) {
+          var total;
+
+          total = prez + Vprez + sec + fSec + org + wocom;
+
+          document.getElementById("presidentPercentage").innerHTML = Math.floor((prez/total) * 100);
+          document.getElementById("VpresidentPercentage").innerHTML = Math.floor((Vprez/total) * 100);
+          document.getElementById("secretaryPercentage").innerHTML = Math.floor((sec/total) * 100);
+          document.getElementById("financialSecretaryPercentage").innerHTML = Math.floor((fSec/total) * 100);
+          document.getElementById("organiserPercentage").innerHTML = Math.floor((org/total) * 100);
+          document.getElementById("wocomPercentage").innerHTML = Math.floor((wocom/total) * 100);
+
+      }
+
+  </script>
+  <script>
+      function Print() {
+        window.print();
+      }
+  </script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
